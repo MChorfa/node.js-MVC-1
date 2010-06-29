@@ -1,0 +1,8 @@
+h1. node.js MVC (name pending)
+
+Version: 0.1.1-a
+Author: James Brumond
+
+h2. Description
+
+An MVC framework for "node.js":http://nodejs.org/ inspired by the "CodeIgniter":http://codeigniter.com PHP framework.
