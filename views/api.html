@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+
+	<!-- Data Tag -->
+		<title><%=title%></title>
+	
+	<!-- File Includes -->
+		<script type="text/javascript" src="resources/highlight.js"></script>
+		<script type="text/javascript" src="resources/jquery.js"></script>
+		<script type="text/javascript" src="resources/control.js"></script>
+		<link rel="stylesheet" type="text/css" href="resources/style.css" />
+		<link rel="stylesheet" type="text/css" href="resources/sh_vim-dark.css" />
+	
+</head>
+<body>
+
+<a href="http://github.com/kbjr/node.js-MVC" id="fork-ribbon">
+<img src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"
+	width="149" height="149" alt="Fork me on GitHub!" title="" />
+</a>
+
+<div id="wrapper">
+
+	<div id="header">
+		<h1>Node.js MVC Documentation</h1>
+	</div>
+	
+	<div id="content">
+	
+		<!-- Synopsis -->
+		<h2>Synopsis</h2>
+		<p>An example of a controller file, <code>controllers/main.js</code>:</p>
+		<pre class="sh_javascript"><code>/*
+ * controllers/main.js
+ */
+
+exports.index = function(request, response) {
+
+	var data = {
+		title: 'Node.js MVC API',
+		heading: 'My Heading'
+	}
+
+	load.view('home', request, response, data);
+
+};</code></pre>
+		<p>
+			This function, located in the file <code>main</code> with the function named
+			<code>index</code> would respond to the request for <code>/main/index</code>.
+			Then you need a view file, <code>views/home.html</code>, to be loaded by the
+			<code>load.view(...)</code> call. This is an (X)HTML page containing optional
+			blocks of code for execution.
+		</p>
+		<pre class="sh_node-html"><code>&lt;!-- views/home.html --&gt;
+&lt;html&gt;
+&lt;head&gt;
+	&lt;title&gt;&lt;%=title%&gt;&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+	&lt;h1 id="header"&gt;&lt;%=heading%&gt;&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+		<p>
+			The <code>&lt;%=var%&gt;</code> used here is similar in functionality to PHP's
+			shorttag syntax. When the <code>load.view(...)</code> method is called, the fourth
+			parameter that you can send is an object containing key/value pairs to be exported
+			as variables to the scope of the view that it loads. The <code>&lt;%=var%&gt;</code>
+			tags then get replaced with those variables' values (eg. <code>&lt;%=title%&gt;</code>
+			gets the value of <code>data.title</code>).
+		</p>
+		<p>
+			The values you pass in as data can also be more complex data structures such as arrays
+			and objects, which can then be accessed using both the array syntax (eg. <code>var["key"]</code>,
+			with or without quotes) and the object syntax (eg. <code>var.key</code>).
+		</p>
+	
+		<!--  -->
+	
+	</div>
+
+</div>
+</body>
+</html>

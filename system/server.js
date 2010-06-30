@@ -9,17 +9,13 @@ global.fs         = require("fs");
 global.config     = require("./config");
 global.load       = require("./loader");
 global.httpErrors = require("./httpErrors");
-global.controller = null;
+global.mime       = require("./mime");
 
 var server,
-cookies = require("./cookies"),
 
 empty = function(str) {
 	return (typeof str == 'undefined' || ! str || (typeof str == 'string' && str.length < 1));
 };
-
-// Sign the cookies
-cookies.secret = config.cookieSig;
 
 // Starts the server
 exports.start = function(port) {
@@ -31,13 +27,36 @@ exports.start = function(port) {
 			pathInfo[1] = config.defaultRoute;
 		if (typeof pathInfo[2] != 'string' || empty(pathInfo[2]))
 			pathInfo[2] = 'index';
-		var success = load.controller(pathInfo[1]);
-		if (success) {
-			load.page(pathInfo[2], request, response);
-		} else {
-			httpErrors.raise(404, request, response);
+		// resource handling
+		if (pathInfo[1] == 'resources') {
+			var path = '';
+			for (var i = 2; i < pathInfo.length; i++)
+				path += "/resources/" + pathInfo[i];
+			path = __dirname + "/.." + path;
+			fs.readFile(path, function(err, content) {
+				if (err) {
+					httpErrors.raise(404, request, response);
+				} else {
+					var mimeType = mime.lookup(path);
+					response.writeHead(200, { "Content-Type": mimeType });
+					response.write(content);
+					response.end();
+				}
+			});
 		}
-		response.end();
+		// page handling
+		else {
+			var success = load.controller(pathInfo[1], response);
+			if (success) {
+				success = load.page(pathInfo[2], request, response);
+				if (! success) {
+					httpErrors.raise(404, request, response);
+				}
+			} else {
+				httpErrors.raise(404, request, response);
+			}
+			response.end();
+		}
 	});
 	server.listen(port);
 	sys.puts("Listening at http://localhost on port " + port + "...");
@@ -51,3 +70,9 @@ exports.close = function() {
 		sys.puts("Server stopped.");
 	}
 };
+
+process.addListener('exit', function() {
+	exports.close();
+	sys.puts("Process Stopped.");
+});
+
