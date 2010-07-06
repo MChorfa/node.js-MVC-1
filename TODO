@@ -10,6 +10,6 @@ more http errors
 
 models
 
-
+export globals to the system/start.js file
 
 
