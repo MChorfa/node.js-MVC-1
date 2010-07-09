@@ -12,4 +12,4 @@ models
 
 export globals to the system/start.js file
 
-
+allow configuring resource directories
