@@ -16,3 +16,5 @@ allow configuring resource directories
 
 change to a structure of this.request and this.response for controllers
 
+full source parsing
+
