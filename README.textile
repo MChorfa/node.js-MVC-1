@@ -6,3 +6,7 @@ Author: James Brumond
 h2. Description
 
 An MVC framework for "node.js":http://nodejs.org/ inspired by the "CodeIgniter":http://codeigniter.com PHP framework.
+
+h3. Please Note
+
+This project is no longer being supported, nor was it ever finished. I will leave all of the source code here for anyone who wants it; as I remember, everything that is in the repo is in working condition. For a list of features that I never quite got around to, just look at the TODO file.
